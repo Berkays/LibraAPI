@@ -1,0 +1,12 @@
+### Build Image ###
+FROM debian:stretch
+
+RUN apt-get update && apt-get install -y curl git netcat-traditional sudo && apt-get clean && rm -r /var/lib/apt/lists/*
+RUN cd /home && git clone https://github.com/Berkays/libra.git
+
+WORKDIR /home/libra
+RUN /scripts/dev_setup.sh
+
+EXPOSE 46000
+
+CMD [ "/home/libra/scripts/cli/start_cli_testnet.sh" ]
